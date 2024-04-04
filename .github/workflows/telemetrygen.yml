@@ -23,10 +23,6 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v4
-        with:
-          go-version: '>=1.17.0'
-          architecture: ppc64le
       - name: Cache Go
         id: go-cache
         timeout-minutes: 5
@@ -36,6 +32,11 @@ jobs:
             ~/go/bin
             ~/go/pkg/mod
           key: go-cache-${{ runner.os }}-${{ hashFiles('**/go.sum') }}
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '>=1.17.0'
+          architecture: ppc64le
+      
       - name: Setup make
         run: sudo apt install -qy make
       - name: Setup Docker Buildx
